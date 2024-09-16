@@ -1,0 +1,20 @@
+.books-header {
+  display: flex;
+  background-color: var(--clr1);
+  color: var(--clr1bg);
+  padding: 1em;
+}
+
+.books-nav {
+  display: flex;
+}
+
+.books-nav a {
+  padding: 1em;
+}
+
+@media (max-width: 720px) {
+  .books-header {
+    color: var(--clr2bg);
+  }
+}
