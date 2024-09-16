@@ -6,7 +6,7 @@ import { BooksHeader } from './cmps/BooksHeader.jsx'
 const { useState, useEffect, useRef } = React
 
 export function App() {
-  const [page, setPage] = useState('home')
+  const [page, setPage] = useState('index')
 
   function onSetPage(page) {
     setPage(page)

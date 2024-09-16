@@ -1,53 +1,87 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
-const BOOKS_KEY = 'carDB'
+const BOOK_KEY = 'carDB'
 var gFilterBy = { txt: '', minSpeed: 0 }
 _createBooks()
 
-export const carService = {
+export const bookService = {
   query,
   get,
   remove,
   save,
-  getEmptyCar,
-  getNextCarId,
   getFilterBy,
   setFilterBy,
 }
 
+export let books = [
+  {
+    id: 'OXeMG8wNskc',
+    title: 'metus hendrerit',
+    description: 'placerat nisi sodales suscipit tellus',
+    thumbnail: 'http://ca.org/books-photos/20.jpg',
+    listPrice: {
+      amount: 109,
+      currencyCode: 'EUR',
+      isOnSale: false,
+    },
+  },
+  {
+    id: 'OXBaG8wNskc',
+    title: 'metus 2',
+    description: 'placerat nisi sodales suscipit tellus',
+    thumbnail: 'http://ca.org/books-photos/15.jpg',
+    listPrice: {
+      amount: 222,
+      currencyCode: 'EUR',
+      isOnSale: false,
+    },
+  },
+  {
+    id: 'OXeMG8eGskc',
+    title: 'metus 3',
+    description: 'placerat nisi sodales suscipit tellus',
+    thumbnail: 'http://ca.org/books-photos/20.jpg',
+    listPrice: {
+      amount: 193,
+      currencyCode: 'EUR',
+      isOnSale: false,
+    },
+  },
+]
+
 function query() {
-  return storageService.query(CAR_KEY).then((cars) => {
+  return storageService.query(BOOK_KEY).then((books) => {
     if (gFilterBy.txt) {
       const regex = new RegExp(gFilterBy.txt, 'i')
-      cars = cars.filter((car) => regex.test(car.vendor))
+      books = books.filter((book) => regex.test(book.vendor))
     }
     if (gFilterBy.minSpeed) {
-      cars = cars.filter((car) => car.maxSpeed >= gFilterBy.minSpeed)
+      books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
     }
-    return cars
+    return books
   })
 }
 
-function get(carId) {
-  return storageService.get(CAR_KEY, carId)
+function get(bookId) {
+  return storageService.get(BOOK_KEY, bookId)
 }
 
-function remove(carId) {
-  return storageService.remove(CAR_KEY, carId)
+function remove(bookId) {
+  return storageService.remove(BOOK_KEY, bookId)
 }
 
-function save(car) {
-  if (car.id) {
-    return storageService.put(CAR_KEY, car)
+function save(book) {
+  if (book.id) {
+    return storageService.put(BOOK_KEY, book)
   } else {
-    return storageService.post(CAR_KEY, car)
+    return storageService.post(BOOK_KEY, book)
   }
 }
 
-// function getEmptyCar(vendor = '', maxSpeed = 0) {
-//   return { id: '', vendor, maxSpeed }
-// }
+function getEmptyBook(vendor = '', maxSpeed = 0) {
+  return { id: '', vendor, maxSpeed }
+}
 
 function getFilterBy() {
   return { ...gFilterBy }
@@ -59,11 +93,11 @@ function setFilterBy(filterBy = {}) {
   return gFilterBy
 }
 
-function getNextCarId(carId) {
-  return storageService.query(CAR_KEY).then((cars) => {
-    let nextCarIdx = cars.findIndex((car) => car.id === carId) + 1
-    if (nextCarIdx === cars.length) nextCarIdx = 0
-    return cars[nextCarIdx].id
+function getNextBookId(bookId) {
+  return storageService.query(BOOK_KEY).then((books) => {
+    let nextCarIdx = books.findIndex((book) => book.id === bookId) + 1
+    if (nextCarIdx === books.length) nextCarIdx = 0
+    return books[nextCarIdx].id
   })
 }
 
