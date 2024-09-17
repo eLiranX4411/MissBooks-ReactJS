@@ -1,7 +1,8 @@
 import { bookService } from '../services/book.service.js'
+import { BooksList } from '../cmps/BooksList.jsx'
 const { useState, useEffect, useRef } = React
 
-export function BooksIndex() {
+export function BooksIndex({}) {
   const [books, setBooks] = useState(null)
 
   useEffect(() => {
@@ -21,5 +22,5 @@ export function BooksIndex() {
 
   if (!books) return <h1>Loading....</h1>
 
-  return <section className='books-container'></section>
+  return <BooksList books={books} />
 }

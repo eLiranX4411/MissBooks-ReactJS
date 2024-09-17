@@ -19,7 +19,7 @@ let books = [
     id: 'OXeMG8wNskc',
     title: 'metus hendrerit',
     description: 'placerat nisi sodales suscipit tellus',
-    thumbnail: 'http://ca.org/books-photos/20.jpg',
+    thumbnail: '10.jpg',
     listPrice: {
       amount: 109,
       currencyCode: 'EUR',
@@ -30,7 +30,7 @@ let books = [
     id: 'OXBaG8wNskc',
     title: 'metus 2',
     description: 'placerat nisi sodales suscipit tellus',
-    thumbnail: 'http://ca.org/books-photos/15.jpg',
+    thumbnail: '15.jpg',
     listPrice: {
       amount: 222,
       currencyCode: 'EUR',
@@ -41,7 +41,7 @@ let books = [
     id: 'OXeMG8eGskc',
     title: 'metus 3',
     description: 'placerat nisi sodales suscipit tellus',
-    thumbnail: 'http://ca.org/books-photos/20.jpg',
+    thumbnail: '20.jpg',
     listPrice: {
       amount: 193,
       currencyCode: 'EUR',
