@@ -15,7 +15,7 @@ export function App() {
   return (
     <section className='app'>
       <BooksHeader onSetPage={onSetPage} />
-      <main class='container'>
+      <main className='container'>
         {page === 'home' && <Home />}
         {page === 'about' && <About />}
         {page === 'index' && <BooksIndex />}

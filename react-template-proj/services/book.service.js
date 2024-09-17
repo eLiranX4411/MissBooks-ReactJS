@@ -1,7 +1,7 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
-const BOOK_KEY = 'carDB'
+const BOOK_KEY = 'bookDB'
 var gFilterBy = { txt: '', minSpeed: 0 }
 _createBooks()
 
@@ -14,7 +14,7 @@ export const bookService = {
   setFilterBy,
 }
 
-export let books = [
+let books = [
   {
     id: 'OXeMG8wNskc',
     title: 'metus hendrerit',
@@ -51,17 +51,23 @@ export let books = [
 ]
 
 function query() {
-  return storageService.query(BOOK_KEY).then((books) => {
-    if (gFilterBy.txt) {
-      const regex = new RegExp(gFilterBy.txt, 'i')
-      books = books.filter((book) => regex.test(book.vendor))
-    }
-    if (gFilterBy.minSpeed) {
-      books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
-    }
-    return books
+  return new Promise((reslove, reject) => {
+    return reslove(books)
   })
 }
+
+// function query() {
+//   // return storageService.query(BOOK_KEY).then((books) => {
+//   //   if (gFilterBy.txt) {
+//   //     const regex = new RegExp(gFilterBy.txt, 'i')
+//   //     books = books.filter((book) => regex.test(book.vendor))
+//   //   }
+//   //   if (gFilterBy.minSpeed) {
+//   //     books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
+//   //   }
+//   //   return books
+//   // })
+// }
 
 function get(bookId) {
   return storageService.get(BOOK_KEY, bookId)
@@ -124,7 +130,7 @@ function _createBooks() {
     }
     books.push(book)
   }
-  console.log('books', books)
+  // console.log('books', books)
 }
 
 // function _createBook(vendor, maxSpeed = 250) {
