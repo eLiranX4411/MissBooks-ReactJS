@@ -22,5 +22,10 @@ export function BooksIndex({}) {
 
   if (!books) return <h1>Loading....</h1>
 
-  return <BooksList books={books} />
+  return (
+    <main>
+      <h1>Welcome to Miss Book</h1>
+      <BooksList books={books} />
+    </main>
+  )
 }

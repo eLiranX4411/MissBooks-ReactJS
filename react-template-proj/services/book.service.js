@@ -3,6 +3,7 @@ import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
 var gFilterBy = { txt: '', minSpeed: 0 }
+var gBooks = []
 _createBooks()
 
 export const bookService = {
@@ -12,61 +13,28 @@ export const bookService = {
   save,
   getFilterBy,
   setFilterBy,
+  getNextBookId,
 }
 
-let books = [
-  {
-    id: 'OXeMG8wNskc',
-    title: 'metus hendrerit',
-    description: 'placerat nisi sodales suscipit tellus',
-    thumbnail: '10.jpg',
-    listPrice: {
-      amount: 109,
-      currencyCode: 'EUR',
-      isOnSale: false,
-    },
-  },
-  {
-    id: 'OXBaG8wNskc',
-    title: 'metus 2',
-    description: 'placerat nisi sodales suscipit tellus',
-    thumbnail: '15.jpg',
-    listPrice: {
-      amount: 222,
-      currencyCode: 'EUR',
-      isOnSale: false,
-    },
-  },
-  {
-    id: 'OXeMG8eGskc',
-    title: 'metus 3',
-    description: 'placerat nisi sodales suscipit tellus',
-    thumbnail: '20.jpg',
-    listPrice: {
-      amount: 193,
-      currencyCode: 'EUR',
-      isOnSale: false,
-    },
-  },
-]
+// Demo data
 
 function query() {
   return new Promise((reslove, reject) => {
-    return reslove(books)
+    return reslove(gBooks)
   })
 }
 
 // function query() {
-//   // return storageService.query(BOOK_KEY).then((books) => {
-//   //   if (gFilterBy.txt) {
-//   //     const regex = new RegExp(gFilterBy.txt, 'i')
-//   //     books = books.filter((book) => regex.test(book.vendor))
-//   //   }
-//   //   if (gFilterBy.minSpeed) {
-//   //     books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
-//   //   }
-//   //   return books
-//   // })
+//   return storageService.query(BOOK_KEY).then((books) => {
+//     if (gFilterBy.txt) {
+//       const regex = new RegExp(gFilterBy.txt, 'i')
+//       books = books.filter((book) => regex.test(book.vendor))
+//     }
+//     if (gFilterBy.minSpeed) {
+//       books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
+//     }
+//     return books
+//   })
 // }
 
 function get(bookId) {
@@ -101,15 +69,15 @@ function setFilterBy(filterBy = {}) {
 
 function getNextBookId(bookId) {
   return storageService.query(BOOK_KEY).then((books) => {
-    let nextCarIdx = books.findIndex((book) => book.id === bookId) + 1
-    if (nextCarIdx === books.length) nextCarIdx = 0
-    return books[nextCarIdx].id
+    let nextBookIdx = books.findIndex((book) => book.id === bookId) + 1
+    if (nextBookIdx === books.length) nextBookIdx = 0
+    return books[nextBookIdx].id
   })
 }
 
 function _createBooks() {
   const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
-  const books = []
+  // const books = []
   for (let i = 0; i < 20; i++) {
     const book = {
       id: utilService.makeId(),
@@ -120,7 +88,7 @@ function _createBooks() {
       description: utilService.makeLorem(20),
       pageCount: utilService.getRandomIntInclusive(20, 600),
       categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
-      thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
+      thumbnail: `${i + 1}.jpg`,
       language: 'en',
       listPrice: {
         amount: utilService.getRandomIntInclusive(80, 500),
@@ -128,9 +96,10 @@ function _createBooks() {
         isOnSale: Math.random() > 0.7,
       },
     }
-    books.push(book)
+    gBooks.push(book)
   }
-  // console.log('books', books)
+  // console.log('books', gBooks)
+  utilService.saveToStorage(BOOK_KEY, gBooks)
 }
 
 // function _createBook(vendor, maxSpeed = 250) {

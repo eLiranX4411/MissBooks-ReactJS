@@ -1,0 +1,11 @@
+.book-card {
+  border: 6px solid gainsboro;
+  border-radius: 1em;
+  padding: 1em;
+  margin: 1em;
+}
+
+.book-card li {
+  display: inline-block;
+  padding: 0.3em;
+}
