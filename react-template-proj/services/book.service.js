@@ -14,28 +14,28 @@ export const bookService = {
   getFilterBy,
   setFilterBy,
   getNextBookId,
+  getDefaultFilter,
 }
 
 // Demo data
-
-function query() {
-  return new Promise((reslove, reject) => {
-    return reslove(gBooks)
-  })
-}
-
 // function query() {
-//   return storageService.query(BOOK_KEY).then((books) => {
-//     if (gFilterBy.txt) {
-//       const regex = new RegExp(gFilterBy.txt, 'i')
-//       books = books.filter((book) => regex.test(book.vendor))
-//     }
-//     if (gFilterBy.minSpeed) {
-//       books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
-//     }
-//     return books
+//   return new Promise((reslove, reject) => {
+//     return reslove(gBooks)
 //   })
 // }
+
+function query() {
+  return storageService.query(BOOK_KEY).then((books) => {
+    if (gFilterBy.txt) {
+      const regex = new RegExp(gFilterBy.txt, 'i')
+      books = books.filter((book) => regex.test(book.vendor))
+    }
+    if (gFilterBy.minSpeed) {
+      books = books.filter((book) => book.maxSpeed >= gFilterBy.minSpeed)
+    }
+    return books
+  })
+}
 
 function get(bookId) {
   return storageService.get(BOOK_KEY, bookId)
@@ -53,8 +53,8 @@ function save(book) {
   }
 }
 
-function getEmptyBook(vendor = '', maxSpeed = 0) {
-  return { id: '', vendor, maxSpeed }
+function getDefaultFilter() {
+  return { title: '', price: 0 }
 }
 
 function getFilterBy() {
@@ -77,7 +77,6 @@ function getNextBookId(bookId) {
 
 function _createBooks() {
   const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
-  // const books = []
   for (let i = 0; i < 20; i++) {
     const book = {
       id: utilService.makeId(),
@@ -102,8 +101,25 @@ function _createBooks() {
   utilService.saveToStorage(BOOK_KEY, gBooks)
 }
 
-// function _createBook(vendor, maxSpeed = 250) {
-//     const car = getEmptyCar(vendor, maxSpeed)
-//     car.id = utilService.makeId()
-//     return car
-// }
+function _createBook() {
+  const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
+  const book = {
+    id: utilService.makeId(),
+    title: utilService.makeLorem(2),
+    subtitle: utilService.makeLorem(4),
+    authors: [utilService.makeLorem(1)],
+    publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+    description: utilService.makeLorem(20),
+    pageCount: utilService.getRandomIntInclusive(20, 600),
+    categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+    thumbnail: `${i + 1}.jpg`,
+    language: 'en',
+    listPrice: {
+      amount: utilService.getRandomIntInclusive(80, 500),
+      currencyCode: 'EUR',
+      isOnSale: Math.random() > 0.7,
+    },
+  }
+  gBooks.push(book)
+  utilService.saveToStorage(BOOK_KEY, gBooks)
+}

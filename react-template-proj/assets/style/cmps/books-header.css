@@ -5,6 +5,12 @@
   padding: 1em;
 }
 
+.index-title {
+  text-align: center;
+  margin: 0 0 1em;
+  font-size: 4rem;
+}
+
 .books-nav {
   display: flex;
 }

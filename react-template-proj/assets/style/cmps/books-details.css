@@ -1,0 +1,14 @@
+.book-detail {
+  width: 800px;
+  height: 800px;
+  margin: auto;
+  background-color: gainsboro;
+
+  border-radius: 1em;
+  padding: 2em;
+}
+
+.book-detail li {
+  display: inline-block;
+  padding: 0.4em;
+}

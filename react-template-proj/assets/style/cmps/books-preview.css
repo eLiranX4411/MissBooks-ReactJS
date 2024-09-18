@@ -9,3 +9,11 @@
   display: inline-block;
   padding: 0.3em;
 }
+
+.thumbnail {
+  width: 400px;
+  height: 400px;
+  object-fit: contain;
+  border-radius: 1em;
+  padding: 0.5em;
+}

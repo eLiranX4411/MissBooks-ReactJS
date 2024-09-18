@@ -1,0 +1,17 @@
+.books-filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-block-end: 2em;
+}
+
+.filter-title {
+  padding: 1em;
+}
+
+.filter-card {
+  padding: 1em;
+  border: 5px solid gainsboro;
+  border-radius: 1em;
+}

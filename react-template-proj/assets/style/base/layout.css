@@ -4,9 +4,11 @@
   padding-right: 1.6rem;
 }
 
-.books-container {
+.books-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {

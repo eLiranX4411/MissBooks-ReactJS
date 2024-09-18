@@ -36,6 +36,7 @@ embed,
 video,
 object {
   max-width: 100%;
+  cursor: pointer;
 }
 
 /* Simple and useful CSS Debugging Technique */
