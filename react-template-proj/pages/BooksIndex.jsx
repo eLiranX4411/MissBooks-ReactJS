@@ -13,7 +13,7 @@ export function BooksIndex() {
 
   useEffect(() => {
     loadBooks()
-  }, [])
+  }, [filterBy])
 
   function onSelectedBookId(bookId) {
     setSelectedBookId(bookId)
@@ -27,7 +27,7 @@ export function BooksIndex() {
 
   function loadBooks() {
     bookService
-      .query()
+      .query(filterBy)
       .then(setBooks)
       .catch((err) => {
         console.log('err:', err)
@@ -39,7 +39,7 @@ export function BooksIndex() {
   return (
     <main className='books-index-page'>
       <h1 className='index-title'>Welcome to Miss Book</h1>
-      <BooksFilter />
+      <BooksFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} />
       {selectedBookId ? <BookDetails bookId={selectedBookId} onBack={() => setSelectedBookId(null)} /> : <BooksList onSelectedBookId={onSelectedBookId} books={books} />}
     </main>
   )

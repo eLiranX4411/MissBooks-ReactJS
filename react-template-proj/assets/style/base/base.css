@@ -5,6 +5,7 @@
 body {
   margin: 0;
   color: var(--gray3);
+  text-wrap: balance;
 }
 
 h1,
@@ -28,6 +29,10 @@ a {
 
 li {
   list-style: none;
+}
+
+ul {
+  padding: 0;
 }
 
 /* Dont stretch my Media */

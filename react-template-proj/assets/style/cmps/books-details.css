@@ -1,6 +1,7 @@
 .book-detail {
-  width: 800px;
-  height: 800px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
   margin: auto;
   background-color: gainsboro;
 
@@ -9,6 +10,14 @@
 }
 
 .book-detail li {
-  display: inline-block;
-  padding: 0.4em;
+  display: inline;
+  padding: 0.1em;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: greenyellow;
 }
