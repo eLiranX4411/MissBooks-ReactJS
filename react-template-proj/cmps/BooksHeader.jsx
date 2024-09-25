@@ -1,31 +1,14 @@
-export function BooksHeader({ onSetPage }) {
-  const gLinks = [
-    {
-      title: 'Home',
-      href: 'home'
-    },
-    {
-      title: 'About',
-      href: 'about'
-    },
-    {
-      title: 'index',
-      href: 'index'
-    }
-  ]
+const { Link, NavLink, useNavigate } = ReactRouterDOM
 
+export function BooksHeader() {
   return (
     <header className='books-header full main-layout'>
       <section>
         <h1>Miss-Books App</h1>
         <nav className='books-nav'>
-          {gLinks.map((link, idx) => (
-            <div key={idx} className='header-link'>
-              <a onClick={() => onSetPage(link.href)} href='#'>
-                {link.title}
-              </a>
-            </div>
-          ))}
+          <NavLink to='/home'>Home</NavLink>
+          <NavLink to='/about'>About</NavLink>
+          <NavLink to='/book'>Books</NavLink>
         </nav>
       </section>
     </header>
