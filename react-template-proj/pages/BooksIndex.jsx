@@ -22,7 +22,7 @@ export function BooksIndex() {
       .query(filterBy)
       .then(setBooks)
       .catch((err) => {
-        console.log('err:', err)
+        console.error('err:', err)
       })
   }
 
@@ -31,11 +31,11 @@ export function BooksIndex() {
       .remove(bookId)
       .then(() => {
         setBooks((books) => books.filter((book) => book.id !== bookId))
-        // showSuccessMsg(`Car removed successfully!`)
+        showSuccessMsg(`Book removed successfully!`)
       })
       .catch((err) => {
-        console.log('Problems removing book:', err)
-        // showErrorMsg(`Problems removing book (${bookId})`)
+        console.error('Problems removing book:', err)
+        showErrorMsg(`Problems removing book (${bookId})`)
       })
   }
 

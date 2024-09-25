@@ -8,6 +8,7 @@ import { BookDetails } from './pages/BookDetails.jsx'
 // Cmps
 import { BooksHeader } from './cmps/BooksHeader.jsx'
 import { NotFound } from './cmps/NotFound.jsx'
+import { UserMsg } from './cmps/UserMsg.jsx'
 
 export function App() {
   return (
@@ -24,6 +25,7 @@ export function App() {
             <Route path='*' element={<NotFound />} />
           </Routes>
         </main>
+        <UserMsg />
       </section>
     </Router>
   )
