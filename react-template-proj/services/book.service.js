@@ -14,7 +14,8 @@ export const bookService = {
   getNextBookId,
   getDefaultFilter,
   getDefaultBook,
-  addReview
+  addReview,
+  getDefaultReview
 }
 
 // Test Things
@@ -80,11 +81,20 @@ function save(book) {
 }
 
 function addReview(bookId, review) {
-  return storageService.post(BOOK_KEY, bookId)
+  return storageService.get(BOOK_KEY, bookId).then((book) => {
+    if (!book.reviews) book.reviews = []
+    book.reviews.push(review)
+
+    return bookService.save(book)
+  })
 }
 
 function getDefaultFilter() {
   return { title: '', price: 0 }
+}
+
+function getDefaultReview() {
+  return { name: '', rating: '', readAt: Date.now() }
 }
 
 function getDefaultBook() {

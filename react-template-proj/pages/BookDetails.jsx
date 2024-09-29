@@ -65,13 +65,19 @@ export function BookDetails() {
     navigate('/book')
   }
 
-  function onAddReview(bookId, review) {
-    bookService.addReview(bookId, review).then((bookId) => console.log(bookId))
+  function onAddReview(reviewData) {
+    bookService
+      .addReview(params.bookId, reviewData)
+      .then(() => {
+        console.log('Review Added!')
+        loadBook()
+      })
+      .catch((err) => {
+        console.error('Error adding review', err)
+      })
   }
 
-  // if (!book) return <h1>Loading....</h1>
   if (!book) return <AppLoader />
-  // console.log(book)
 
   return (
     <React.Fragment>
@@ -96,7 +102,6 @@ export function BookDetails() {
         <p className='categories'>Categories: {book.categories}</p>
         <p className='language'>Language: {book.language}</p>
         <button onClick={onBack}>Back</button>
-        <button onClick={() => onAddReview(book)}>Add Review</button>
         <section className='prev-next-btns'>
           <Link to={`/book/${book.prevBookId}`}>
             <button>Prev</button>
@@ -105,10 +110,42 @@ export function BookDetails() {
             <button>Next</button>
           </Link>
         </section>
-        <section className='review-details'>
-          <BookReview />
-        </section>
+      </section>
+      <section className='review-details'>
+        <BookReview bookId={params.bookId} onAddReview={onAddReview} />
+      </section>
+
+      <section className='reviews-list'>
+        <h3>User Reviews</h3>
+        {book.reviews && book.reviews.length > 0 ? (
+          <ul>
+            {book.reviews.map((review, idx) => (
+              <li key={idx}>
+                <p>
+                  <strong>Name:</strong> {review.name}
+                </p>
+                <p>
+                  <strong>Rating:</strong> {review.rating}/5
+                </p>
+                <p>
+                  <strong>Read At:</strong> {review.readAt}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No reviews yet. Be the first to review!</p>
+        )}
       </section>
     </React.Fragment>
   )
 }
+
+/*
+  function onAddReview(review) {
+    if (review === `name`) return prompt('Enter Full Name:')
+    if (review === `rating`) return prompt('Enter Rating 1-5:')
+    if (review === `readAt`) return Date.now()
+    return review
+  }
+  */

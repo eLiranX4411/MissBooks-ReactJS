@@ -23,6 +23,7 @@ export function BooksIndex() {
       .then(setBooks)
       .catch((err) => {
         console.error('err:', err)
+        showErrorMsg(`Can't load books (${books})`)
       })
   }
 
