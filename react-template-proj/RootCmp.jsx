@@ -9,6 +9,7 @@ import { BookDetails } from './pages/BookDetails.jsx'
 import { BooksHeader } from './cmps/BooksHeader.jsx'
 import { NotFound } from './cmps/NotFound.jsx'
 import { UserMsg } from './cmps/UserMsg.jsx'
+import { BookAdd } from './cmps/BookAdd.jsx'
 
 export function App() {
   return (
@@ -17,11 +18,12 @@ export function App() {
         <BooksHeader />
         <main className='container'>
           <Routes>
-            <Route path='/' element={<Navigate to='/home' />} />
+            <Route path='/' element={<Navigate to='/book' />} /> {/*home */}
             <Route path='/home' element={<Home />} />
             <Route path='/about' element={<About />} />
             <Route path='/book' element={<BooksIndex />} />
             <Route path='/book/:bookId' element={<BookDetails />} />
+            <Route path='/book/add' element={<BookAdd />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </main>

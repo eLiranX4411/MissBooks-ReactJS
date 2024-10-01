@@ -2,6 +2,9 @@ import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
+
+// const GOOGLE_BOOK_KEY = 'googleBookDB'
+// var gCache = utilService.loadFromStorage(GOOGLE_BOOK_KEY) || {}
 // var gFilterBy = { title: '', price: 0 }
 
 export const bookService = {
@@ -15,34 +18,10 @@ export const bookService = {
   getDefaultFilter,
   getDefaultBook,
   addReview,
-  getDefaultReview
+  getDefaultReview,
+  getGoogleBookData,
+  addGoogleBook
 }
-
-// Test Things
-// function query() {
-//   return new Promise((reslove, reject) => {
-//     return reslove(gBooks)
-//   })
-// }
-
-// function query(filterBy = {}) {
-//   return storageService.query(BOOK_KEY).then((books) => {
-//     if (!books || !books.length) {
-//       _createBooks()
-//       books = utilService.loadFromStorage(BOOK_KEY)
-//     }
-
-//     if (gFilterBy.title) {
-//       const regex = new RegExp(gFilterBy.title, 'i')
-//       books = books.filter((book) => regex.test(book.title))
-//     }
-
-//     if (gFilterBy.price) {
-//       books = books.filter((book) => book.listPrice.amount >= gFilterBy.price)
-//     }
-//     return books
-//   })
-// }
 
 function query(filterBy = {}) {
   return storageService.query(BOOK_KEY).then((books) => {
@@ -156,25 +135,29 @@ function _createBooks() {
   utilService.saveToStorage(BOOK_KEY, books)
 }
 
-function _createBook() {
-  const ctgs = ['Love', 'Fiction', 'Poetry', 'Computers', 'Religion']
-  const book = {
-    id: utilService.makeId(),
-    title: utilService.makeLorem(2),
-    subtitle: utilService.makeLorem(4),
-    authors: [utilService.makeLorem(1)],
-    publishedDate: utilService.getRandomIntInclusive(1950, 2024),
-    description: utilService.makeLorem(20),
-    pageCount: utilService.getRandomIntInclusive(20, 600),
-    categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
-    thumbnail: `${i + 1}.jpg`,
-    language: 'en',
-    listPrice: {
-      amount: utilService.getRandomIntInclusive(80, 500),
-      currencyCode: 'EUR',
-      isOnSale: Math.random() > 0.7
+function getGoogleBookData(query) {
+  const url = `https://www.googleapis.com/books/v1/volumes?printType=books&q=${query}`
+
+  return axios.get(url).then((res) => {
+    const firstFiveBooks = res.data.items.slice(0, 5)
+    return firstFiveBooks.map((book) => {
+      const volumeInfo = book.volumeInfo
+      const googleBookId = book.id
+      return {
+        title: volumeInfo.title,
+        id: googleBookId
+      }
+    })
+  })
+}
+
+function addGoogleBook(item) {
+  return storageService.query(BOOK_KEY).then((books) => {
+    const existingBook = books.find((book) => book.title === item.title || book.id === item.id)
+    if (existingBook) {
+      return Promise.reject('Book already exists in the database')
     }
-  }
-  gBooks.push(book)
-  utilService.saveToStorage(BOOK_KEY, gBooks)
+
+    return storageService.post(BOOK_KEY, item)
+  })
 }
